@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'  # Enable the inner app 
+    'app',
+    'core'  # Enable the inner app 
 ]
 
 MIDDLEWARE = [
@@ -139,4 +140,10 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'core/static'),
 )
 #############################################################
+
+#            New Settings
+### Must migrate before changes will take place
 #############################################################
+
+# core == app, user == model  [in app]
+AUTH_USER_MODEL = 'authentication.User'
