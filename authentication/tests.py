@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2021 - present 
 """
 
-from django.test import TestCase
-
-# Create your tests here.
+from django.test import (TestCase,
+                         Client)
+from .views import *
+from .forms import *

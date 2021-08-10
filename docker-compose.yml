@@ -1,14 +1,20 @@
 version: '3'
 services:
-  appseed-app:
+  cbffdemo-app:
     restart: always
     env_file: .env
-    build: .
+    build: 
+      context: .
     ports:
       - "5005:5005"
+      - "8000:8000"
+    volume:
+      - ./app:/app
     networks:
       - db_network
       - web_network
+    command: >
+      sh -c "python3 manage.py runserver 0.0.0.0:5005"
   nginx:
     restart: always
     image: "nginx:latest"
@@ -19,7 +25,7 @@ services:
     networks:
       - web_network
     depends_on: 
-      - appseed-app
+      - cbffdemo-app
 networks:
   db_network:
     driver: bridge
