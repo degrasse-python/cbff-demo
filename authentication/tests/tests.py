@@ -6,8 +6,8 @@ Copyright (c) 2021 - present
 from django.test import (TestCase,
                          Client)
 from django.contrib.auth import get_user_model 
-from .views import *
-from .forms import *
+from authentication.views import *
+from authentication.forms import *
 
 
 class SetUp_Class(TestCase):
