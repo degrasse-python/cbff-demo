@@ -1,7 +1,7 @@
 /*
 
 =========================================================
-* Volt - Free Bootstrap 5 Dashboard
+Admin Dashboard Demo
 =========================================================
 
 =========================================================
@@ -4712,15 +4712,15 @@ textarea.form-control-lg {
 
 .btn-secondary {
     color: #fff;
-    background-color: #0063a6;
-    border-color: #005c99;
+    background-color: #95dbff;
+    border-color: #95dbff;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(46, 54, 80, 0.075);
 }
 
 .btn-secondary:hover {
     color: #fff;
-    background-color: #d4ebf9;
-    border-color: #d4ebf9;
+    background-color: #289ce1;
+    border-color: #289ce1;
 }
 
 .btn-check:focus + .btn-secondary, .btn-secondary:focus {
@@ -4752,15 +4752,15 @@ textarea.form-control-lg {
 
 .btn-tertiary {
     color: #ffffff;
-    background-color: #2CA58D;
-    border-color: #2CA58D;
+    background-color: #d4ebf9;
+    border-color: #d4ebf9;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(46, 54, 80, 0.075);
 }
 
 .btn-tertiary:hover {
     color: #ffffff;
-    background-color: #258c78;
-    border-color: #238471;
+    background-color: #005a96;
+    border-color: #005a96;
 }
 
 .btn-check:focus + .btn-tertiary, .btn-tertiary:focus {
@@ -4793,14 +4793,14 @@ textarea.form-control-lg {
 .btn-dark {
     color: #ffffff;
     background-color: #0066CC;
-    border-color: #000000;
+    border-color: #005c99;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(46, 54, 80, 0.075);
 }
 
 .btn-dark:hover {
     color: #ffffff;
-    background-color: #5887d3;
-    border-color: #000000;
+    background-color: #0066CC;
+    border-color: #005c99;
 }
 
 .btn-check:focus + .btn-dark, .btn-dark:focus {
@@ -4912,15 +4912,15 @@ textarea.form-control-lg {
 
 .btn-warning {
     color: #262B40;
-    background-color: #f5b759;
-    border-color: #f5b759;
+    background-color: #f4ab00;
+    border-color: #f4ab00;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(46, 54, 80, 0.075);
 }
 
 .btn-warning:hover {
     color: #262B40;
-    background-color: #f7c272;
-    border-color: #f6be6a;
+    background-color: #f4ab00;
+    border-color: #f4ab00;
 }
 
 .btn-check:focus + .btn-warning, .btn-warning:focus {
@@ -4946,14 +4946,14 @@ textarea.form-control-lg {
 
 .btn-warning:disabled, .btn-warning.disabled {
     color: #262B40;
-    background-color: #f5b759;
-    border-color: #f5b759;
+    background-color: #f4ab00;
+    border-color: #f4ab00;
 }
 
 .btn-danger {
     color: #ffffff;
-    background-color: #FA5252;
-    border-color: #FA5252;
+    background-color: #e22b2f;
+    border-color: #e22b2f;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(46, 54, 80, 0.075);
 }
 
@@ -5663,14 +5663,14 @@ textarea.form-control-lg {
 }
 
 .btn-outline-secondary {
-    color: #f3b773;
-    border-color: #f3b773;
+    color: #f4ab00;
+    border-color: #f4ab00;
 }
 
 .btn-outline-secondary:hover {
     color: #262B40;
-    background-color: #f3b773;
-    border-color: #f3b773;
+    background-color: #f4ab00;
+    border-color: #f4ab00;
 }
 
 .btn-check:focus + .btn-outline-secondary, .btn-outline-secondary:focus {
@@ -25816,8 +25816,8 @@ label {
 }
 
 .btn-warning:hover {
-    background-color: #f4ad41;
-    border-color: #f4ad41;
+    background-color: #f4ab00;
+    border-color: #f4ab00;
 }
 
 .btn-danger:hover {
