@@ -3,7 +3,7 @@
 Copyright (c) 2021 - present 
 """
 
-from typing_extensions import Required
+# from typing_extensions import Required
 from django.shortcuts import render
 
 # Create your views here.

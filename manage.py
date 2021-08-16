@@ -7,7 +7,7 @@ import os
 import sys
 import csv
 
-from app.models import Orders
+# from app.models import Orders
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')

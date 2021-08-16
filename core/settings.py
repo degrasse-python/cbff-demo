@@ -146,4 +146,4 @@ STATICFILES_DIRS = (
 #############################################################
 
 # core == app, user == model  [in app]
-AUTH_USER_MODEL = 'authentication.User'
+# AUTH_USER_MODEL = 'authentication.User'
