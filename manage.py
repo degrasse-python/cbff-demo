@@ -9,7 +9,7 @@ import csv
 
 from rox.server.rox_server import Rox
 
-from .core.flags import (Flags,
+from core.flags import (Flags,
                             ROLLOUT_ENV_KEY)
 # from app.models import Orders
 
@@ -17,18 +17,18 @@ from .core.flags import (Flags,
 # ROLLOUT_ENV_KEY = os.environ['FMKEY']
 
 def main():
-  # register flags and init flags
+  """# register flags and init flags
   if Flags:
     flags = Flags()
     # Register the flags container
     Rox.register(flags)
     # Setup the environment key
-    cancel_event = Rox.setup(ROLLOUT_ENV_KEY).result()
-    print('enableCustomersKPI is {}'.format(flags.enableCustomersKPI.is_enabled()))
-
-
+    try:
+      cancel_event = Rox.setup(ROLLOUT_ENV_KEY).result()
+    except:
+      pass
   else:
-    pass
+    pass"""
 
   os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
   try:

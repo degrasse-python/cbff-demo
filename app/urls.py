@@ -18,7 +18,14 @@ urlpatterns = [
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 
+    # API paths
+    path('api', views.getEcommData, name='getEcommData'),
+
     # load data 
     path('data', views.pivot_data, name='pivot_data'),
+
+    # load csv
+    path('CsvData', views.getCsvData, name='getCsvData'),
+
 
 ]
