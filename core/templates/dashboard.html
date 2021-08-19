@@ -34,7 +34,7 @@
     <div class="row justify-content-md-center">
         <div class="col-12 mb-4">
             <!-- Line Graph {{ LineGraphVariant }}-->
-            <div class="card bg-secondary-alt shadow-sm" v-if="show_LineGraph"> 
+          <div class="card bg-secondary-alt shadow-sm" v-if="show_LineGraph"> 
                 <div class="card-header d-sm-flex flex-row align-items-center flex-0">
                     <div class="d-block mb-3 mb-sm-0">
                         <div class="h5 fw-normal mb-2">Sales Value</div>
@@ -501,7 +501,7 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<!--script>
+<script>
     import { Flags } from '../static/assets/js/flags'
     
     export default {
@@ -510,12 +510,12 @@
       data () {
         return {
           // enableLineGraph: 'is-newversion', 
-          // show_LineGraph: Flags.enableLineGraph.isEnabled(),
+          show_LineGraph: Flags.enableLineGraph.isEnabled(),
           // show_CustomersKPI: Flags.enableCustomersKPI.isEnabled(),
           show_RevenueKPI: Flags.enableRevenueKPI.isEnabled(),
           // show_NewTaskButton: Flags.enableNewTaskButton.isEnabled(),
         }
       }
     }
-</script-->
+</script>
 {% endblock javascripts %}

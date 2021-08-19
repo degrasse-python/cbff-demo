@@ -31,7 +31,7 @@ class Flags:
     # list of all dashboard options - here we give the engn team the option to revert
     self.LineGraphVariant = RoxString('is-newversion', ['is-revert', 'is-newversion'])
     self.enableRevenueKPI =  RoxFlag(False)
-    # enableLineGraph =  Rox.Flag(False),
+    self.enableLineGraph =  Rox.Flag(False),
     self.enableNewTaskButton =  RoxFlag(False)
 
     # User attr
@@ -43,7 +43,7 @@ class Flags:
     # setup configuration_fetched_handler in the options object
     options = RoxOptions(
         version="1.0.4",
-        fetch_interval=60,
+        fetch_interval=600,
         logger=MyLogger(),
         configuration_fetched_handler=lambda sender: sender=="APPLIED_FROM_NETWORK" # TODO: add things to do when configuration was fetched
         # impression_handler=lambda sender, e: # TODO: add things to do on impression

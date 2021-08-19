@@ -40,9 +40,10 @@ def pages(request):
         context['segment'] = load_template
         ### --- Feature Flags --- ###
         # add ff inside context dict to pass them to the templates on frontend
-        #context['enableCustomersKPI'] = Flags.enableCustomersKPI
-        #context['LineGraphVariant'] = Flags.LineGraphVariant
-        #context['enableRevenueKPI'] = Flags.enableRevenueKPI
+        # context['enableCustomersKPI'] = Flags.enableCustomersKPI
+        context['LineGraphVariant'] = Flags.LineGraphVariant
+        context['enableLineGraph'] = Flags.enableLineGraph
+        context['enableRevenueKPI'] = Flags.enableRevenueKPI
         #context['enableNewTaskButton'] = Flags.enableNewTaskButton
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))

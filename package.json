@@ -1,24 +1,22 @@
 {
-    "name": "django-dashboard-volt",
+    "name": "django-dashboard",
     "mastertemplate": "boilerplate-code-django-dashboard",
     "version": "1.0.1",
     "description": "Template project - Django Boilerplate Code",
     "scripts": {},
     "repository": {
         "type": "git",
-        "url": "https://github.com/app-generator/django-dashboard-volt"
+        "url": ""
     },
-    "bugs": {
-        "url": "https://github.com/app-generator/django-dashboard-volt/issues",
-        "email": "support@appseed.us"
-    },
-    "author": "AppSeed App Generator <support@appseed.us> (https://appseed.us)",
+    "bugs": {},
+    "author": "",
     "engines": {
         "node": ">=10.0.0"
     },
     "dependencies": {
         "d3": "^7.0.0",
-        "gulp": "^4.0.2"
+        "gulp": "^4.0.2",
+        "vue": "file:vue/dist/vue.common.js"
     },
     "devDependencies": {}
 }
