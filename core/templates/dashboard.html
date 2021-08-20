@@ -2,8 +2,10 @@
 
 {% block title %} Dashboard {% endblock %} 
 
+<!-- JS libs >
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script-->
 
-<!-- Specific Page CSS goes HERE  -->
+<!-- Page CSS -->
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdn.cloudbees.com/honeyui/2.4.0/honeyui-min.css">
 {% endblock stylesheets %}
@@ -33,11 +35,12 @@
     <div id="pivot-chart-container"></div></div>
     <div class="row justify-content-md-center">
         <div class="col-12 mb-4">
-            <!-- Line Graph {{ LineGraphVariant }}-->
+          <!-- Line Graph {{ LineGraphVariant }}-->
+          
           <div class="card bg-secondary-alt shadow-sm" v-if="show_LineGraph"> 
                 <div class="card-header d-sm-flex flex-row align-items-center flex-0">
                     <div class="d-block mb-3 mb-sm-0">
-                        <div class="h5 fw-normal mb-2">Sales Value</div>
+                        <div class="h5 fw-normal mb-2"> Sales Value</div>
                         <h2 class="h3">$10,567</h2>
                         <div class="small mt-2"> 
                             <span class="fw-bold me-2">Yesterday</span>                              
@@ -54,12 +57,12 @@
                     <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
                 </div>
             </div>
-            <!-- {{ LineGraphVariant }} >
+            <!-- {{ LineGraphVariant }} -->
             <div class="card bg-secondary-alt shadow-sm" >
                 
-                <span> "Graph coming soon" </span>
+                <span> {{ LineGraphVariant }} </span>
                   
-            </div-->
+            </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-4 mb-4">
             <div class="card border-light shadow-sm">
@@ -210,7 +213,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        /demo/admin/modals.html
+                                        /demo/admin/models.html
                                     </th>
                                     <td>
                                         1,483
@@ -502,7 +505,7 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-    import { Flags } from '../static/assets/js/flags'
+    import { Flags } from '../static/assets/js/flags.js'
     
     export default {
       // return the flags to app.rollout.io
