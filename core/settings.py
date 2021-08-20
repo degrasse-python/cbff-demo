@@ -4,9 +4,13 @@ Copyright (c) 2021
 """
 
 import os
+import logging.config
+
 from decouple import config
 from unipath import Path
 import dj_database_url
+
+# logging.config.fileConfig('./logs/logging.conf')
 
 DEBUG = True
 
@@ -53,8 +57,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
+LOGIN_REDIRECT_URL = "logout"   # Route defined in app/urls.py
+LOGOUT_REDIRECT_URL = "lock"  # Route defined in app/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "core/templates")  # ROOT dir for templates
 
 TEMPLATES = [
@@ -72,6 +76,45 @@ TEMPLATES = [
         },
     },
 ]
+
+### --- TODO Logging for production --- ###
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'frontend': {
+            'level': 'ERROR',
+            'class': "logging.StreamHandler",
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            # 'propagate': True,
+            'level': 'ERROR'
+        },
+        "django.template": {
+            'handlers': ['frontend'],
+            'level': 'ERROR'
+
+        }
+    }
+}
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

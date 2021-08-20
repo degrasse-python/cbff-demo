@@ -36,7 +36,7 @@
     <div class="row justify-content-md-center">
         <div class="col-12 mb-4">
           <!-- Line Graph {{ LineGraphVariant }}-->
-          
+          {% if enableLineGraph %}
           <div class="card bg-secondary-alt shadow-sm" v-if="show_LineGraph"> 
                 <div class="card-header d-sm-flex flex-row align-items-center flex-0">
                     <div class="d-block mb-3 mb-sm-0">
@@ -58,11 +58,13 @@
                 </div>
             </div>
             <!-- {{ LineGraphVariant }} -->
+            {% else %}
             <div class="card bg-secondary-alt shadow-sm" >
                 
-                <span> {{ LineGraphVariant }} </span>
+                <span> {{ enableLineGraph }} </span>
                   
             </div>
+            {% endif %}
         </div>
         <div class="col-12 col-sm-6 col-xl-4 mb-4">
             <div class="card border-light shadow-sm">

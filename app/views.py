@@ -20,12 +20,13 @@ from .models import Orders
 from .utils import Csv2Json
 from core.flags import Flags
 
+FLAGS = Flags()
 
 @login_required(login_url="/login/")
 def index(request):
     context = {}
     context['segment'] = 'index'
-    context['enableSocialSignOn'] = Flags.enableSocialSignOn
+    context['enableSocialSignOn'] = FLAGS.enableSocialSignOn
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
@@ -36,27 +37,28 @@ def pages(request):
     # Pick out the html file name from the url and load that template.
     try:
         
-        load_template      = request.path.split('/')[-1]
+        load_template = request.path.split('/')[-1]
         context['segment'] = load_template
-        ### --- Feature Flags --- ###
+        ### --- Feature FLAGS --- ###
         # add ff inside context dict to pass them to the templates on frontend
-        # context['enableCustomersKPI'] = Flags.enableCustomersKPI
-        context['LineGraphVariant'] = Flags.LineGraphVariant
-        context['enableLineGraph'] = Flags.enableLineGraph
-        context['enableRevenueKPI'] = Flags.enableRevenueKPI
-        #context['enableNewTaskButton'] = Flags.enableNewTaskButton
+        context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.is_enabled()
+        context['LineGraphVariant'] = FLAGS.LineGraphVariant.get_value()
+        context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
+        context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
+        context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
         
     except template.TemplateDoesNotExist:
-
         html_template = loader.get_template( 'page-404.html' )
         return HttpResponse(html_template.render(context, request))
 
     except:
-    
-        html_template = loader.get_template( 'page-500.html' )
+        print('Random 500 errors')
+        html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
+
+
 
 def pivot_data(request):
     dataset = Orders.objects.all()
@@ -83,3 +85,4 @@ def getEcommData(path='./data.csv', secret=None, key=None):
         
         
     #return json.dumps(getdata)
+

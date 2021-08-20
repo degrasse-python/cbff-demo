@@ -31,7 +31,7 @@ class Flags:
     # list of all dashboard options - here we give the engn team the option to revert
     self.LineGraphVariant = RoxString('is-newversion', ['is-revert', 'is-newversion'])
     self.enableRevenueKPI =  RoxFlag(False)
-    self.enableLineGraph =  Rox.Flag(False),
+    self.enableLineGraph =  RoxFlag(False)
     self.enableNewTaskButton =  RoxFlag(False)
 
     # User attr
