@@ -17,8 +17,9 @@ from django.http import (HttpResponse,
 from django.core import serializers
 import pymongo
 
-from .models import Orders
-from .utils import *
+from app.models.models import Orders
+from app.models.mongo_models import MongoOrders
+from app.utils import *
 from core.flags import Flags
 
 FLAGS = Flags()
@@ -30,6 +31,9 @@ def index(request):
     context['enableSocialSignOn'] = FLAGS.enableSocialSignOn
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
+
+
+
 
 @login_required(login_url="/login/")
 def pages(request):
@@ -49,6 +53,18 @@ def pages(request):
         context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
         
         ecomm_data = {}
+
+        amt = []
+        dates = []
+        price = []
+        country = []
+
+        queryset = MongoOrders.objects
+        for order in queryset:
+            amt.append(order.Quantity)
+            dates.append(order.InvoiceDate)
+            price.append(order.UnitPrice)
+            country.append(order.Country)
 
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))

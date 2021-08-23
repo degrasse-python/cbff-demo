@@ -124,34 +124,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME'  : 'db.sqlite3',
-        },
-        'mongo_ecommerce': {
-            'ENGINE': 'djongo',
-            'NAME': ENV('MONGO_DBNAME'), 
-            "COLLECTION": ENV('MONGO_DBCOLLECTION'),
-            "USER": ENV("MONGO_USER"),
-            "PASSWORD": ENV("MONGO_PASS"),
-            "HOST": ENV("MONGO_HOST"),
-            "PORT": ENV("MONGO_DBPORT"),
-        }
-    }
 
 DATABASES = {
-    'mongo_ecommerce': {
+    'default': {
         'ENGINE': 'djongo',
         'NAME': ENV('MONGO_DBNAME'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'ENV("MONGO_HOST")',
-            'port': ENV("MONGO_DBPORT"),
+            'host': ENV("MONGO_HOST"),
+            # 'port': int(ENV("MONGO_DBPORT")),
             'username': ENV("MONGO_USER"),
             'password': ENV("MONGO_PASS"),
-            'authSource': ENV('MONGO_DBNAME'),
-            'authMechanism': 'SCRAM-SHA-1'
+            'authSource': "db-name", 
+            'authMechanism': 'SCRAM-SHA-1',
+            # "waitQueueTimeoutMS": 60000, # how many milsec to wait for timeout
+            # "ssl": True,
         },
         'LOGGING': {
             'version': 1,
