@@ -9,9 +9,12 @@ import logging.config
 from decouple import config
 from unipath import Path
 import dj_database_url
+import environ
 
 # logging.config.fileConfig('./logs/logging.conf')
-
+ENV = environ.Env()
+# reading .env file
+environ.Env.read_env()
 DEBUG = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -125,20 +128,42 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME'  : 'db.sqlite3',
+        },
+        'mongo_ecommerce': {
+            'ENGINE': 'djongo',
+            'NAME': ENV('MONGO_DBNAME'), 
+            "COLLECTION": ENV('MONGO_DBCOLLECTION'),
+            "USER": ENV("MONGO_USER"),
+            "PASSWORD": ENV("MONGO_PASS"),
+            "HOST": ENV("MONGO_HOST"),
+            "PORT": ENV("MONGO_DBPORT"),
         }
     }
-"""
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'mydb',
-            'USER': 'myuser',
-            'PASSWORD': 'mypass',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }"""
+
+DATABASES = {
+    'mongo_ecommerce': {
+        'ENGINE': 'djongo',
+        'NAME': ENV('MONGO_DBNAME'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'ENV("MONGO_HOST")',
+            'port': ENV("MONGO_DBPORT"),
+            'username': ENV("MONGO_USER"),
+            'password': ENV("MONGO_PASS"),
+            'authSource': ENV('MONGO_DBNAME'),
+            'authMechanism': 'SCRAM-SHA-1'
+        },
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propagate': False,                        
+                }
+            },
+            },
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

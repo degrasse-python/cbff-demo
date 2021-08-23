@@ -3,6 +3,8 @@ import json
 import datetime
 
 from django.db import models
+import pymongo
+from pymongo import MongoClient
 
 # format of the datetime str in the row on the dt col
 FORMAT = "%m/%d/%Y %H:%M"
@@ -13,14 +15,73 @@ class FormattedDateTimeField(models.DateTimeField):
     if dt_string:
       # return the datetime str as a formatted dt obj
       return datetime.datetime.strptime(dt_string, FORMAT)
-    return ''
+    else:
+      print("no obj to parse with datetime from file")
 
 # TODO create functions to connect to backend and get data
 class BackendConnection:
-  def __init__(self, secret=None, key=None) -> None:
+  def __init__(self, secret=None, key=None):
     self.secret = ''
     self.key = ''
     pass
+  
+    def get_db_handle(db_name, host, port, username, password):
+      """
+        Setup connection to database
+        
+      """
+      client = MongoClient(host=host,
+                          port=int(port),
+                          username=username,
+                          password=password
+                        )
+      db_handle = client['db_name']
+      return db_handle, client
+    
+    def upload_csv_to_mongodb(data, db_name, col_name, connect_string=None):
+      """ 
+        Upload CSV data to database
+
+        data: csv file
+        connect_string: proper connection string to access mongodb instance
+        db_name:  name of new/existing db
+        col_name: name of new/existing collection (table) in the db
+
+        data will be converted then inserted as a list of dict's which only contain 
+        col and values, no row number info
+
+      """
+      import pandas as pd
+      # connect to instance
+      # connect_string = 'mongodb+srv://<username>:<password>@<atlas cluster>/<myFirstDatabase>?retryWrites=true&w=majority' 
+      # db-admin:ishqQNfeHvDf4OED
+      # "mongodb+srv://db-admin:ishqQNfeHvDf4OED@cluster007.c5d1k.mongodb.net/opensourceEcomm?retryWrites=true"
+      # 'opensourceEcomm' 'ecomm1'
+      if connect_string is None:
+        connect_string = "mongodb+srv://db-admin:ishqQNfeHvDf4OED@cluster007.c5d1k.mongodb.net/opensourceEcomm?retryWrites=true"
+        # connect to the mongodb instance
+        my_client = pymongo.MongoClient(connect_string)
+      
+      else:
+        my_client = pymongo.MongoClient(connect_string)
+      
+      # First define the database name
+      dbname = my_client[db_name]
+
+      # Now get/create collection name (remember that you will see the database in your mongodb cluster only after you create a collection
+      collection_name = dbname[col_name]
+
+      # use pandas to upload data and turn it into a dict for the db
+      df = pd.read_csv(data, encoding="ascii", encoding_errors="replace")
+      df_dict = df.to_dict('records')
+      # insert all data into db collect : list of dict's
+      collection_name.insert_many(df_dict)
+      # Check the count
+      count = collection_name.count()
+      print(count)
+      print("Finished uploading csv to db")
+
+
 
 class Csv2Json:
   """

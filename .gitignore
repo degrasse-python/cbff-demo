@@ -12,6 +12,7 @@ __pycache__/
 *.log
 
 # venv
+core/env
 env
 venv
 
@@ -21,7 +22,7 @@ venv
 # javascript
 package-lock.json
 
-staticfiles/*
+
 !staticfiles/.gitkeep 
 .vscode/symbols.json
 node_modules

@@ -15,9 +15,10 @@ from django.template import loader
 from django.http import (HttpResponse,
                         JsonResponse)
 from django.core import serializers
+import pymongo
 
 from .models import Orders
-from .utils import Csv2Json
+from .utils import *
 from core.flags import Flags
 
 FLAGS = Flags()
@@ -46,6 +47,9 @@ def pages(request):
         context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
         context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
         context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
+        
+        ecomm_data = {}
+
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
         
