@@ -22,10 +22,9 @@ urlpatterns = [
     path('api', views.getEcommData, name='getEcommData'),
 
     # load data 
-    path('data', views.pivot_data, name='pivot_data'),
+    path('pivot_data', views.pivot_data, name='pivot_data'),
 
-    # load csv
-    path('CsvData', views.getCsvData, name='getCsvData'),
-
+    # graphs
+    path('line_chart', views.line_chart, name='line_chart'),
 
 ]

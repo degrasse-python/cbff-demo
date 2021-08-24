@@ -51,20 +51,6 @@ def pages(request):
         context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
         context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
         context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
-        
-        ecomm_data = {}
-
-        amt = []
-        dates = []
-        price = []
-        country = []
-
-        queryset = MongoOrders.objects
-        for order in queryset:
-            amt.append(order.Quantity)
-            dates.append(order.InvoiceDate)
-            price.append(order.UnitPrice)
-            country.append(order.Country)
 
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
@@ -85,6 +71,8 @@ def pivot_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
+
+
 # return data from api
 def getCsvData(path='./data.csv', secret=None, key=None):
     # getdata = db.get_ecomm_data() # create function to get data
@@ -99,10 +87,25 @@ def getCsvData(path='./data.csv', secret=None, key=None):
         #return json.dumps(getdata)
 
 # return data from api
-def getEcommData(path='./data.csv', secret=None, key=None):
-    # getdata = db.get_ecomm_data() # create function to get data
-    pass
+def line_chart(request):
+    ecomm_data = {}
+    amt = []
+    dates = []
+    price = []
+    country = []
+
+    # example of all data selected by date of today? 
+    """
+    data = MongoOrders.objects.all() \
+        .extra(select={'InvoiceDate': connections[MongoOrders.objects.db].ops.date_trunc_sql('InvoiceDate', 'date')}) \
+        .values('InvoiceDate') 
+    """
+
+    querysetall = MongoOrders.objects.all()
+
+    return JsonResponse(list(querysetall), safe=False)
+
+    
         
         
-    #return json.dumps(getdata)
 
