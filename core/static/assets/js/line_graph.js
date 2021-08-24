@@ -12,10 +12,10 @@ var svg = d3.select("#my_dataviz")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-//Read the data
+// load json via endpoint named 'line_chart' and assign the loaded json the variable name
 d3.json("{% url 'line_chart' %}",
 
-// When reading the csv, I must format variables:
+// When reading the json, format variables:
 function(d){
   return { InvoiceDate : d3.timeParse("%m-%d-%Y")(d.InvoiceDate), value : d.value }
 },
@@ -35,15 +35,15 @@ function(data) {
   var y = d3.nest()
     .domain([0, d3.sum(data, function(d) { return d.UnitPrice; })])
     .range([ height, 0 ]);
-
-  yAxis = svg.append("g")
-    .call(d3.axisLeft(y));
   
   var y = d3.nest()
-    .key(function(d) { return d.InvoiceDate;})
-    .rollup(function(d) { 
-   return d3.sum(d, function(g) {return g.UnitPrice; });
+    .key(function(d) { return d.InvoiceDate;}) // A ‘key’ is like a way of saying “This is the thing we will be grouping on”.
+    .rollup(function(d) {  //  the rollup function takes all values at variable 'y' in InvoiceDate and agg (sums) them
+   return d3.sum(d, function(g) {return g.UnitPrice;});
   }).entries(d); // d = the array to use
+  
+  yAxis = svg.append("g")
+    .call(d3.axisLeft(y));
 
   // Add a clipPath: everything out of this area won't be drawn.
   var clip = svg.append("defs").append("svg:clipPath")
