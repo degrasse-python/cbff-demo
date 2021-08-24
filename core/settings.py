@@ -170,7 +170,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DATE_INPUT_FORMATS = ("%m/%d/%Y %H:%M", )
+DATE_INPUT_FORMATS = ("%m/%d/%Y %H:%M", "%m/%d/%Y %H:%M")
+DATE_FORMAT = "%m/%d/%Y"
+
 
 LANGUAGE_CODE = 'en-us'
 
