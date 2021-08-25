@@ -1,1 +1,0 @@
-psql -c "CREATE USER admin WITH LOGIN PASSWORD 'admin';"q
