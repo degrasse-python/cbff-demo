@@ -8,6 +8,7 @@
 <!-- Page CSS -->
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdn.cloudbees.com/honeyui/2.4.0/honeyui-min.css">
+
 {% endblock stylesheets %}
 
 {% block content %}
@@ -57,11 +58,13 @@
                     <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
                 </div>
             </div>
-            <!-- {{ LineGraphVariant }} -->
+            <!-- New Varient of line graph -->
             {% else %}
+            <!-- div class="card bg-secondary-alt shadow-sm" data-url="{% url 'get_data' %}" -->
             <div class="card bg-secondary-alt shadow-sm" >
                 
-                <span> {{ enableLineGraph }} </span>
+                <!--span> {{ enableLineGraph }} </span-->
+
                   
             </div>
             {% endif %}

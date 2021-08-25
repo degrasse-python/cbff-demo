@@ -105,6 +105,19 @@ def line_chart(request):
 
     return JsonResponse(list(querysetall), safe=False)
 
+# return data from api
+def get_data(request):
+    import pandas as pd
+    # path
+    data = "./data.csv"
+    # dataframe from data
+    df = pd.read_csv(data, encoding="ascii", encoding_errors="replace")
+    # json
+    result = df.to_json(orient="records")
+    parsed = json.loads(result)
+    json.dumps(parsed, indent=2)
+
+    return JsonResponse(json.dumps(parsed, indent=2), safe=False)
     
         
         

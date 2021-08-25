@@ -91,7 +91,7 @@ class Csv2Json:
   json_path: path to where you want to save the new json
 
   """
-  def __init__(self, csv_path, json_path) -> None:
+  def __init__(self, csv_path, json_path) -> dict:
     self.csv_path = csv_path
     self.json_path = json_path
 

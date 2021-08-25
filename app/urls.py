@@ -19,7 +19,7 @@ urlpatterns = [
     re_path(r'^.*\.*', views.pages, name='pages'),
 
     # API paths
-    # path('api', views.getEcommData, name='getEcommData'),
+    path('get_data', views.get_data, name='get_data'),
 
     # load data 
     path('pivot_data', views.pivot_data, name='pivot_data'),
