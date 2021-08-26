@@ -16,6 +16,7 @@ from django.http import (HttpResponse,
                         JsonResponse)
 from django.core import serializers
 import pymongo
+from plotly.offline import plot
 
 from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
@@ -51,6 +52,15 @@ def pages(request):
         context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
         context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
         context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
+        
+        x_data = [0,1,2,3]
+        y_data = [x**2 for x in x_data]
+        plot_div = plot([Scatter(x=x_data, y=y_data,
+                            mode='lines', name='test',
+                            opacity=0.8, marker_color='green')],
+                output_type='div')
+
+        context['LineGraphPlotly'] = plot_div
 
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
@@ -116,6 +126,8 @@ def get_data(request):
     result = df.to_json(orient="records")
     parsed = json.loads(result)
     json.dumps(parsed, indent=2)
+
+    
 
     return JsonResponse(json.dumps(parsed, indent=2), safe=False)
     
