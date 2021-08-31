@@ -38,13 +38,13 @@ def login_view(request):
         return render(request, "accounts/login.html")
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
+
 def logout_view(request):
     
     msg = None
     if request.method == "POST":
         logout(request)
         return redirect("accounts/login.html")
-
 
 
 def register_user(request):

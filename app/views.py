@@ -16,12 +16,12 @@ from django.http import (HttpResponse,
                         JsonResponse)
 from django.core import serializers
 import pymongo
-from plotly.offline import plot
 
 from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
 from app.utils import *
 from core.flags import Flags
+
 
 FLAGS = Flags()
 
@@ -32,8 +32,6 @@ def index(request):
     context['enableSocialSignOn'] = FLAGS.enableSocialSignOn
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
-
-
 
 
 @login_required(login_url="/login/")
@@ -53,12 +51,15 @@ def pages(request):
         context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
         context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
         
-        x_data = [0,1,2,3]
-        y_data = [x**2 for x in x_data]
+        # x_data = [0,1,2,3]
+        # y_data = [x**2 for x in x_data]
+        x_data, y_data  = lineplot(path="/app/data.csv")
         plot_div = plot([Scatter(x=x_data, y=y_data,
                             mode='lines', name='test',
                             opacity=0.8, marker_color='green')],
-                output_type='div')
+                            show_link=False, link_text="",
+                            output_type='div', include_plotlyjs=False,
+                            )
 
         context['LineGraphPlotly'] = plot_div
 
@@ -75,12 +76,10 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
-
 def pivot_data(request):
     dataset = Orders.objects.all()
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
-
 
 
 # return data from api

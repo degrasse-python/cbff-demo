@@ -3,8 +3,13 @@ import json
 import datetime
 
 from django.db import models
+from django.db.models import Sum, Avg, Min, Max
+from app.models.mongo_models import *
+
 import pymongo
 from pymongo import MongoClient
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
 
 # format of the datetime str in the row on the dt col
 FORMAT = "%m/%d/%Y %H:%M"
@@ -126,3 +131,33 @@ class Csv2Json:
         jsonf.write(json.dumps(data, indent=4))
     
     csvdict_to_json(self.json_path, data=csv_to_dict(self.csv_path))
+
+
+# return data from api
+def lineplot(path=None):
+    import pandas as pd
+    
+    # path
+    if path == None:
+      path = "./data.csv"
+    # dataframe from data
+    df = pd.read_csv(path, encoding="ascii", encoding_errors="replace")
+    # json
+    # df['InvoiceDate'] = df['InvoiceDate'].dt.strftime('%m-%d%Y')
+    df.InvoiceDate = pd.to_datetime(df.InvoiceDate)
+    df['InvoiceDate'] = df['InvoiceDate'].dt.date
+    g = df.groupby('InvoiceDate')
+    y_data = g.UnitPrice.agg(sum).array
+    x_data = g.InvoiceDate.unique().array
+    new_x = []
+    for i in x_data:
+      new_x.append(i[0])
+    # import plotly.express as px
+    # fig = px.line(df, x="x", y="y", title="Unsorted Input") 
+    # fig.show()
+    
+    return new_x, y_data
+
+def query():
+  queryset_date = MongoOrders.objects.filter().values('InvoiceDate')
+  queryset_price = MongoOrders.objects.filter().values('UnitPrice')

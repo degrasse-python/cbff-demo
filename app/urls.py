@@ -13,6 +13,7 @@ urlpatterns = [
 
     # The home page
     path('', login_view, name="login"),
+    path('login/', login_view, name="login"),
     path('admin/', admin.site.urls, name='admin'),
 
     # Matches any html file
