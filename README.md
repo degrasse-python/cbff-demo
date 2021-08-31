@@ -13,6 +13,11 @@
 
 <br />
 
+## TODOS
+
+1. finish api endpoint
+2. point D3.js at endpoint to retrive data for plots
+3. Figure out why stylesheet isn't working with Django but is with regular html
 
 ## How to use it
 
