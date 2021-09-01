@@ -8,14 +8,17 @@ async function draw() {
   const dataset = await d3.csv("./data.csv") //, function(csv) {
     //csv['InvoiceDate'] = format(csv['InvoiceDate'])})
 
-  const format = d3.timeFormat("%M/%d/%Y")
-  const parseDate = d3.timeParse('%M/%d/%Y %H:%m')
+  const formatA = d3.timeFormat("%M/%d/%Y")
+  const parseDateA = d3.timeParse('%M/%d/%Y %H:%m')  
+  const formatB = d3.timeFormat("%M/%d/%Y")
+  const parseDateB = d3.timeParse('%M/%d/%Y')
+
   // for dates on rollup array
-  const xAccessor = d => d[0]// format(parseDate(d.InvoiceDate))
+  const xAccessor = d => parseDateB(d[0]) // format(parseDate(d.InvoiceDate))
   // for price on rollup array
   const yAccessor = d => d[1]//parseInt(d.UnitPrice)
   // nested array for graphing
-  const groupSum = d3.rollups(dataset, v => d3.sum(v, d => d.UnitPrice), d => format(parseDate(d.InvoiceDate)))
+  const groupSum = d3.rollups(dataset, v => d3.sum(v, d => d.UnitPrice), d => formatA(parseDateA(d.InvoiceDate)))
   console.log("Data Loaded: ", groupSum[0])
   // Dimensions
   let dimensions = {
@@ -51,34 +54,49 @@ async function draw() {
     .style('opacity', 0)
     .style('pointer-events', 'none')
 
-    
   // Scales
   const yScale = d3.scaleLinear()
-    .domain(d3.extent(groupSum.slice(0,10000)), yAccessor) // dataset.slice(0,10000), yAccessor)) //.slice(0,10000)
+    .domain(d3.extent(groupSum, yAccessor)) // dataset.slice(0,10000), yAccessor)) //.slice(0,10000)
     .range([dimensions.ctrHeight, 0])
     .nice()
+  console.log("yScale: ", yScale.domain())
 
-  const xScale = d3.scaleUtc()
-    .domain(d3.extent(groupSum.slice(0,10000)), xAccessor) // dataset.slice(0,10000), xAccessor))
+  const xScale = d3.scaleTime()
+    .domain(d3.extent(groupSum, xAccessor)) // dataset.slice(0,10000), xAccessor))
     .range([0, dimensions.ctrWidth])    
-  
-    // with the formatting it does not work
-  //console.log("With xScale: ", xScale(xAccessor(dataset[0])))
-  //console.log("With xAccessor: ", (xAccessor(dataset[0])))
+
+  // console.log("xScale: ", xScale.domain())
+  // console.log("With xAccessor: ", (xAccessor(groupSum[0])))
+  // console.log("Without xAccessor: ", groupSum[0][0])
+  //with the formatting it does not work
+  //console.log("xScale: ", xScale)
+  //console.log("With yAccessor: ", (yAccessor(groupSum[0])))
   //console.log("Without formatting: ", groupSum[0].InvoiceDate)
-  console.log("Scaled Loaded")
-
+  console.log("Scales Loaded")
+  
   const lineGenerator = d3.line()
-    .x( (d) => xScale(xAccessor(d)))
-    .y( (d) => yScale(yAccessor(d)))
+    .x( d => xAccessor(d))
+    .y( d => yAccessor(d))
+  // Axis
+  const yAxis = d3.axisLeft(yScale)
+    .tickFormat((d) => `$${d}`)
+  // append scale to graph
+  ctr.append('g')
+    .call(yAxis)
+  
+  const xAxis = d3.axisBottom(xScale)
+  // append scale
+  ctr.append('g')
+    .style('transform', `translateY(${dimensions.ctrHeight}px)`)
+    .call(xAxis)
 
-  //console.log(lineGenerator(dataset))
+  console.log("Line: ", lineGenerator(groupSum))
   ctr.append('path')
     .datum(groupSum.slice(0,10000))
     .attr('d', lineGenerator)
     .attr('fill', 'none')
-    .attr('stroke', '#30475e')
-    .attr('stroke-width', 2)/*
+    .attr('stroke', 'steelblue')
+    .attr('stroke-width', 1.5)/*
     .on('touchmouse mousemove', function(event) {
       const mousePos = d3.pointer(event, this)
       const date = xScale.invert(mousePos[0])
@@ -95,36 +113,15 @@ async function draw() {
 
     })
     .on('mouseleave', function (event) {
-      
-    })*/
-
-  // Axis
-  const yAxis = d3.axisLeft(yScale)
-    .tickFormat((d) => `$${d}`)
-  ctr.append('g')
-    .call(yAxis)
-
-  const xAxis = d3.axisBottom(xScale)
-  ctr.append('g')
-    .style('transform', `translateY(${dimensions.ctrHeight}px)`)
-    .call(xAxis)
-
-  // Tooltip
+      // Tooltip
   ctr.append('rect')
     .attr('width', dimensions.ctrWidth)
     .attr('height', dimensions.ctrHeight)
     .style('opacity', 0)
+    })*/
 
-  /*   
-  ctr.selectAll('circle')
-    .data(dataset)
-    .join('circle')
-    .attr('cx', d => xScale(xAccessor(d)))
-    .attr('cy', d => yScale(yAccessor(d)))
-    //.attr('r', 5)
-    .attr('b', 2)
-    .attr('fill', 'black')
-  */
+
+
 
 }
 
