@@ -11,8 +11,10 @@ from rox.server.rox_server import Rox
 
 from .flags import (Flags,
                     ROLLOUT_ENV_KEY)
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
+# setup env
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+# get asgi
 application = get_asgi_application()
 
 try:
@@ -22,5 +24,6 @@ try:
     Rox.register(flags)
     # Setup the environment key
     cancel_event = Rox.setup(ROLLOUT_ENV_KEY).result()
-except:
-  pass
+
+except Exception as e:
+  print('%s (%s)' % (e, type(e)))

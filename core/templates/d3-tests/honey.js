@@ -2,12 +2,8 @@
 async function draw() {
   
   // Data
-  // const dataset = await d3.csv("./data.csv") 
-  // date format 12/1/2010 11:33
-  // dataset.forEach(function(d) {d.InvoiceDate = parseDate(d.InvoiceDate)})
-  const dataset = await d3.csv("./data.csv") //, function(csv) {
-    //csv['InvoiceDate'] = format(csv['InvoiceDate'])})
-
+  const dataset = await d3.csv("./data.csv") 
+  // Format
   const formatA = d3.timeFormat("%M/%d/%Y")
   const parseDateA = d3.timeParse('%M/%d/%Y %H:%m')  
   const formatB = d3.timeFormat("%M/%d/%Y")
@@ -64,8 +60,8 @@ async function draw() {
   const xScale = d3.scaleTime()
     .domain(d3.extent(groupSum, xAccessor)) // dataset.slice(0,10000), xAccessor))
     .range([0, dimensions.ctrWidth])    
-
-  // console.log("xScale: ", xScale.domain())
+  console.log("xScale: ", xScale.domain())
+  
   // console.log("With xAccessor: ", (xAccessor(groupSum[0])))
   // console.log("Without xAccessor: ", groupSum[0][0])
   //with the formatting it does not work
@@ -75,8 +71,16 @@ async function draw() {
   console.log("Scales Loaded")
   
   const lineGenerator = d3.line()
-    .x( d => xAccessor(d))
-    .y( d => yAccessor(d))
+    .x( d => xScale(xAccessor(d)))
+    .y( d => yScale(yAccessor(d)))
+
+  const histogram = d3.histogram()
+    .value(d => yScale(yAccessor(d)))   // I need to give the vector of value
+    .domain(yScale)  // then the domain of the graphic
+    .thresholds(); // then the numbers of bins
+
+  const bins = histogram(yAccessor(groupSum))
+
   // Axis
   const yAxis = d3.axisLeft(yScale)
     .tickFormat((d) => `$${d}`)

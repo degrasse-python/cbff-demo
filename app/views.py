@@ -16,6 +16,7 @@ from django.http import (HttpResponse,
                         JsonResponse)
 from django.core import serializers
 import pymongo
+from rox.server.rox_server import Rox
 
 from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
@@ -36,44 +37,47 @@ def index(request):
 
 @login_required(login_url="/login/")
 def pages(request):
-    context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url and load that template.
-    try:
-        
-        load_template = request.path.split('/')[-1]
-        context['segment'] = load_template
-        ### --- Feature FLAGS --- ###
-        # add ff inside context dict to pass them to the templates on frontend
-        context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.is_enabled()
-        context['LineGraphVariant'] = FLAGS.LineGraphVariant.get_value()
-        context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
-        context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
-        context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.is_enabled()
-        
-        # x_data = [0,1,2,3]
-        # y_data = [x**2 for x in x_data]
-        x_data, y_data  = lineplot(path="/app/data.csv")
-        plot_div = plot([Scatter(x=x_data, y=y_data,
-                            mode='lines', name='test',
-                            opacity=0.8, marker_color='green')],
-                            show_link=False, link_text="",
-                            output_type='div', include_plotlyjs=False,
-                            )
+  context = {}
+  # All resource paths end in .html.
+  # Pick out the html file name from the url and load that template.
+  try:
+    load_template = request.path.split('/')[-1]
+    context['segment'] = load_template
+    ### --- Feature FLAGS --- ###
+    ##Rox.fetch()
+    # add ff inside context dict to pass them to the templates on frontend
+    # context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
+    context['LineGraphVariant'] = FLAGS.LineGraphVariant.get_value()
+    context['enableLineGraph'] = FLAGS.enableLineGraph.is_enabled()
+    context['enableRevenueKPI'] = FLAGS.enableRevenueKPI.is_enabled()
+    # context['enableNewTaskButton'] = FLAGS.enableNewTaskButton.get_value()
+    print("enableLineGraph: %s" % (context['enableLineGraph']))
+    print("enableRevenueKPI: %s" % (context['enableRevenueKPI']))
+    print("LineGraphVariant: %s" % (context['LineGraphVariant']))
+    # x_data = [0,1,2,3]
+    # y_data = [x**2 for x in x_data]
+    # print(os.getcwd())
+    x_data, y_data  = lineplot(path="./app/data.csv")
+    plot_div = plot([Scatter(x=x_data, y=y_data,
+                        mode='lines', name='test',
+                        opacity=0.8, marker_color='green')],
+                        show_link=False, link_text="",
+                        output_type='div', include_plotlyjs=False,
+                        )
 
-        context['LineGraphPlotly'] = plot_div
+    context['LineGraphPlotly'] = plot_div
 
-        html_template = loader.get_template( load_template )
-        return HttpResponse(html_template.render(context, request))
+    html_template = loader.get_template( load_template )
+    return HttpResponse(html_template.render(context, request))
         
-    except template.TemplateDoesNotExist:
-        html_template = loader.get_template( 'page-404.html' )
-        return HttpResponse(html_template.render(context, request))
+  except template.TemplateDoesNotExist:
+      html_template = loader.get_template( 'page-404.html' )
+      return HttpResponse(html_template.render(context, request))
 
-    except:
-        print('Random 500 errors')
-        html_template = loader.get_template( load_template )
-        return HttpResponse(html_template.render(context, request))
+  except Exception as e:
+    print('%s (%s)' % (e, type(e)))
+    html_template = loader.get_template( load_template )
+  return HttpResponse(html_template.render(context, request))
 
 
 def pivot_data(request):

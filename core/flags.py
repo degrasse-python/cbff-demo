@@ -43,10 +43,10 @@ class Flags:
     # setup configuration_fetched_handler in the options object
     options = RoxOptions(
         version="1.0.4",
-        fetch_interval=600,
+        fetch_interval=30,
         logger=MyLogger(),
-        configuration_fetched_handler=lambda sender: sender=="APPLIED_FROM_NETWORK" # TODO: add things to do when configuration was fetched
-        # impression_handler=lambda sender, e: # TODO: add things to do on impression
+        configuration_fetched_handler=lambda o: print("applied-from=%s creation-date=%s has-changes=%s error=%s" % (o.fetcher_status , o.creation_date , o.has_changes , o.error_details))
+        #lambda sender: sender=="APPLIED_FROM_NETWORK" # TODO: add things to do when configuration was fetched
         # When a property does not exist on the client side what do you do?
         # dynamic_property_rule_handler=lambda property, context: # TODO: return dynamic rule for properties
-)
+      )
