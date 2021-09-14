@@ -12,9 +12,9 @@ from authentication.views import login_view
 urlpatterns = [
 
     # The home page
-    path('', login_view, name="login"),
-    path('login/', login_view, name="login"),
-    path('admin/', admin.site.urls, name='admin'),
+    path('', views.pages, name='pages'
+    ),
+
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),

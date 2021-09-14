@@ -41,8 +41,10 @@ def pages(request):
   # All resource paths end in .html.
   # Pick out the html file name from the url and load that template.
   try:
-    load_template = request.path.split('/')[-1]
-    context['segment'] = load_template
+    #load_template = request.path.split('/')[-1]
+    #context['segment'] = load_template
+    context['segment'] = 'dashboard'
+    html_template = loader.get_template( 'dashboard.html' )
     ### --- Feature FLAGS --- ###
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
@@ -54,9 +56,7 @@ def pages(request):
     print("enableLineGraph: %s" % (context['enableLineGraph']))
     print("enableRevenueKPI: %s" % (context['enableRevenueKPI']))
     print("LineGraphVariant: %s" % (context['LineGraphVariant']))
-    # x_data = [0,1,2,3]
-    # y_data = [x**2 for x in x_data]
-    # print(os.getcwd())
+
     x_data, y_data  = lineplot(path="./app/data.csv")
     plot_div = plot([Scatter(x=x_data, y=y_data,
                         mode='lines', name='test',
@@ -67,7 +67,7 @@ def pages(request):
 
     context['LineGraphPlotly'] = plot_div
 
-    html_template = loader.get_template( load_template )
+    # html_template = loader.get_template( load_template )
     return HttpResponse(html_template.render(context, request))
         
   except template.TemplateDoesNotExist:
