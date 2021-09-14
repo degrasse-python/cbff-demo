@@ -125,7 +125,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': ENV('MONGO_DBNAME'),
@@ -150,7 +150,7 @@ DATABASES = {
             },
             },
     }
-}
+}"""
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
