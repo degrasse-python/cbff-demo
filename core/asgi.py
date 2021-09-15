@@ -16,14 +16,3 @@ from .flags import (Flags,
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 # get asgi
 application = get_asgi_application()
-
-try:
-  if Flags:
-    flags = Flags()
-    # Register the flags container
-    Rox.register(flags)
-    # Setup the environment key
-    cancel_event = Rox.setup(ROLLOUT_ENV_KEY).result()
-
-except Exception as e:
-  print('%s (%s)' % (e, type(e)))

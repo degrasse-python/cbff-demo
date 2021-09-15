@@ -13,9 +13,8 @@ from core.flags import (Flags,
                             ROLLOUT_ENV_KEY)
 # from app.models import Orders
 
-# GLOBALS
-# ROLLOUT_ENV_KEY = os.environ['FMKEY']
-
+flags = Flags()
+  
 def main():
 
   os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
@@ -27,9 +26,27 @@ def main():
         "available on your PYTHONPATH environment variable? Did you "
         "forget to activate a virtual environment?"
         ) from exc
-  execute_from_command_line(sys.argv)
 
+  # Setup Feature Management SDK
+  try:
+    # Register the flags container
+    Rox.register('Production', flags)
+    print("Feature Management Flags Registered")
+    # Setup the environment key
+    cancel_event = Rox.setup(ROLLOUT_ENV_KEY, flags.options).result()
+    print("Feature Management Setup - Starting Server")
+    execute_from_command_line(sys.argv)
+  except Exception as e:
+    print('%s (%s)' % (e, type(e)))
+    try:
+      Rox.shutdown()
+    except Exception as e:
+      print('%s (%s)' % (e, type(e)))
+
+      # execute server init  
+      execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    main()
+  main()
+
 
