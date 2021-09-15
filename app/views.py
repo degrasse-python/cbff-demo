@@ -47,9 +47,9 @@ def pages(request):
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
     # context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
-    context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
-    context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
-    context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
+    context['LineGraphVariant'] = flags.LineGraphVariant.get_value(context='Production')
+    context['enableLineGraph'] = flags.enableLineGraph.is_enabled(context='Production')
+    context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled(context='Production')
     # context['enableNewTaskButton'] = flags.enableNewTaskButton.get_value()
     print("enableLineGraph: %s" % (context['enableLineGraph']))
     print("enableRevenueKPI: %s" % (context['enableRevenueKPI']))
