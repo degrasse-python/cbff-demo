@@ -26,7 +26,6 @@ from core.flags import Flags
 
 FLAGS = Flags()
 
-@login_required(login_url="/login/")
 def index(request):
     context = {}
     context['segment'] = 'index'
@@ -35,7 +34,6 @@ def index(request):
     return HttpResponse(html_template.render(context, request))
 
 
-@login_required(login_url="/login/")
 def pages(request):
   context = {}
   # All resource paths end in .html.
@@ -43,8 +41,8 @@ def pages(request):
   try:
     #load_template = request.path.split('/')[-1]
     #context['segment'] = load_template
-    context['segment'] = 'dashboard'
-    html_template = loader.get_template( 'dashboard.html' )
+    context['segment'] = 'dashboard2'
+    html_template = loader.get_template( 'dashboard2.html' )
     ### --- Feature FLAGS --- ###
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
