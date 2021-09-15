@@ -8,13 +8,28 @@ services:
     ports:
       - "5005:5005"
       - "8000:8000"
-    volume:
+    volumes:
       - ./app:/app
     networks:
       - db_network
       - web_network
     command: >
       sh -c "python3 manage.py runserver 0.0.0.0:5005"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=cbffdemo-app
+      - DB_USER=postgres
+      - DB_PASS=password
+    depends_on: 
+      - cbffdemo-app
+
+  db:
+    image: postgres:10-alpine
+    environment: 
+      - POSTGRES_DB=cbffdemo-app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
   nginx:
     restart: always
     image: "nginx:latest"
@@ -26,6 +41,7 @@ services:
       - web_network
     depends_on: 
       - cbffdemo-app
+
 networks:
   db_network:
     driver: bridge

@@ -16,10 +16,19 @@
 ## TODOS
 
 1. finish api endpoint
-2. point D3.js at endpoint to retrive data for plots
-3. Figure out why stylesheet isn't working with Django but is with regular html
+2. fix FM sync
+3. finish docker-compose image
 
 ## How to use it
+### First way
+```bash
+$ # Get the code via zip or cmd line
+$ git clone 
+$ cd cbff-demo
+$ docker-compose build
+$ docker-compose up
+
+```
 
 ```bash
 $ # Get the code
