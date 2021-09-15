@@ -74,7 +74,7 @@ def pages(request):
 
   except Exception as e:
     print('%s (%s)' % (e, type(e)))
-    html_template = loader.get_template( 'dashboard2.html' )
+    html_template = loader.get_template( 'dashboard.html' )
   return HttpResponse(html_template.render(context, request))
 
 
