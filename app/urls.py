@@ -11,10 +11,9 @@ from authentication.views import login_view
 
 urlpatterns = [
 
-    # The home page
+    # The dashboard page
     path('', views.pages, name='pages'
     ),
-
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
