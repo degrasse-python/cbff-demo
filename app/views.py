@@ -41,8 +41,8 @@ def pages(request):
   try:
     #load_template = request.path.split('/')[-1]
     #context['segment'] = load_template
-    context['segment'] = 'dashboard2'
-    html_template = loader.get_template( 'dashboard2.html' )
+    context['segment'] = 'dashboard'
+    html_template = loader.get_template( 'dashboard.html' )
     ### --- Feature FLAGS --- ###
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
@@ -64,7 +64,7 @@ def pages(request):
                         )
 
     context['LineGraphPlotly'] = plot_div
-
+    print("plot_finished")
     # html_template = loader.get_template( load_template )
     return HttpResponse(html_template.render(context, request))
         
@@ -74,7 +74,7 @@ def pages(request):
 
   except Exception as e:
     print('%s (%s)' % (e, type(e)))
-    html_template = loader.get_template( load_template )
+    html_template = loader.get_template( 'dashboard2.html' )
   return HttpResponse(html_template.render(context, request))
 
 
