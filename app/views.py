@@ -17,12 +17,15 @@ from django.http import (HttpResponse,
 from django.core import serializers
 import pymongo
 from rox.server.rox_server import Rox
+import analytics
 
 from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
 from app.utils import *
 from core.flags import Flags, ROLLOUT_ENV_KEY
 from manage import flags
+
+analytics.write_key = 'XvgumyHDSUHci6aCqdv96XbVNaKOhaJS'
 
 def index(request):
     context = {}
@@ -33,11 +36,16 @@ def index(request):
 
 
 def pages(request):
+  
   context = {}
   # All resource paths end in .html.
   # Pick out the html file name from the url and load that template.
   # flags = Flags()
-
+  try:
+    Rox.fetch()
+    print('fetched')
+  except Exception as e:
+    print('%s (%s)' % (e, type(e)))
   try:
     #load_template = request.path.split('/')[-1]
     #context['segment'] = load_template
@@ -47,14 +55,14 @@ def pages(request):
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
     # context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
-    context['LineGraphVariant'] = flags.LineGraphVariant.get_value(context='Production')
-    context['enableLineGraph'] = flags.enableLineGraph.is_enabled(context='Production')
-    context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled(context='Production')
+    context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
+    context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
+    context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
     # context['enableNewTaskButton'] = flags.enableNewTaskButton.get_value()
     print("enableLineGraph: %s" % (context['enableLineGraph']))
     print("enableRevenueKPI: %s" % (context['enableRevenueKPI']))
     print("LineGraphVariant: %s" % (context['LineGraphVariant']))
-
+    
     x_data, y_data  = lineplot(path="./app/data.csv")
     plot_div = plot([Scatter(x=x_data, y=y_data,
                         mode='lines', name='test',
