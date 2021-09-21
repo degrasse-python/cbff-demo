@@ -20,3 +20,4 @@ RUN python manage.py migrate
 
 EXPOSE 5005
 CMD ["gunicorn", "--config", "gunicorn-cfg.py", "core.wsgi"]
+
