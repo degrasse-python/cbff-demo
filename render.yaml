@@ -1,0 +1,15 @@
+databases:
+  - name: cbff-demo
+    user: user
+
+services:
+  - type: web
+    name: cbff-demo
+    env: python3
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn cbff-demo.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4

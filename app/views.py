@@ -23,9 +23,22 @@ from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
 from app.utils import *
 from core.flags import Flags, ROLLOUT_ENV_KEY
-from manage import flags
 
 analytics.write_key = 'XvgumyHDSUHci6aCqdv96XbVNaKOhaJS'
+flags = Flags()
+  # Setup Feature Management SDK
+try:
+  flag_dict = {}
+  # Register the flags container
+  Rox.register('default-kpi', flags)
+  print("Feature Management Flags Registered")
+  # Setup the environment key
+  cancel_event = Rox.setup(ROLLOUT_ENV_KEY, flags.options).result();
+  print("Feature Management Setup - Starting Server")
+  print("enableLineGraph: %s" % (flags.enableRevenueKPI.is_enabled()))
+  print("enableRevenueKPI: %s" % (flags.LineGraphVariant.get_value()))
+except Exception as e:
+  print('%s (%s)' % (e, type(e)))
 
 def index(request):
     context = {}

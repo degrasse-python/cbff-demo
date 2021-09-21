@@ -24,10 +24,14 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'S#perS3crEt_1122')
 
-
-
 if not DEBUG:
-    SECRET_KEY = os.environ['SECRET_KEY']
+  SECRET_KEY = os.environ['SECRET_KEY']
+  # in your application directory on Render.
+  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+  # Turn on WhiteNoise storage backend that takes care of compressing static files
+  # and creating unique names for each version so they can safely be cached forever.
+  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+  
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
@@ -35,17 +39,22 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:    
+  ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'app',
-    'core'  # Enable the inner app 
+  'django.contrib.admin',
+  'render.apps.RenderConfig',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'app',
+  'core'  # Enable the inner app 
 ]
 
 MIDDLEWARE = [
