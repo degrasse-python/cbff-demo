@@ -12,69 +12,76 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- Primary Meta Tags -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!-- Primary Meta Tags -->
 
-<!-- Graphs-->
-<script src="http://d3js.org/d3.v6.js" charset="utf-8"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<!--script src="/static/assets/js/volt.js"></script> -->
+  <!-- Graphs-->
+  <script src="http://d3js.org/d3.v6.js" charset="utf-8"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!--script src="/static/assets/js/volt.js"></script> -->
 
-<title>
+  <title>
     New Bees Dashboard - {% block title %}{% endblock %} | Cloudbees
-</title>
+  </title>
 
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta name="title" content="New Bees Dashboard">
-<meta name="author" content="Primetime">
-<meta name="description" content="">
-<meta name="keywords" content="Cloudbees, Feature Management, dashboard" />
-<link rel="canonical" href="cloudbees.com">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="title" content="New Bees Dashboard">
+  <meta name="author" content="Primetime">
+  <meta name="description" content="">
+  <meta name="keywords" content="Cloudbees, Feature Management, dashboard" />
+  <link rel="canonical" href="cloudbees.com">
 
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="theme-color" content="#ffffff">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="16x16"
+    href="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
 
-<!-- Fontawesome -->
-<!--link type="text/css" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <!-- Fontawesome -->
+  <!--link type="text/css" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
 <!-- Sweet Alert -->
-<!--link type="text/css" href="/static/assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+  <!--link type="text/css" href="/static/assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
 <!-- Notyf -->
-<!--link type="text/css" href="/static/assets/vendor/notyf/notyf.min.css" rel="stylesheet">
+  <!--link type="text/css" href="/static/assets/vendor/notyf/notyf.min.css" rel="stylesheet">
 
 <!-- CSS -->
-<link type="text/css" href="/static/assets/css/honey.css" rel="stylesheet" >
-<link type="text/css" href="https://cdn.jsdelivr.net/npm/@cloudbees/honeyui@2.4.0/dist/index.min.css" rel="stylesheet">
+  <link type="text/css" href="/static/assets/css/honey.css" rel="stylesheet">
+  <link type="text/css" href="https://cdn.jsdelivr.net/npm/@cloudbees/honeyui@2.10.0/dist/index.min.css"
+    rel="stylesheet">
 
 
 </head>
+
 <body>
 
   <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-md-none">
-      <a class="navbar-brand me-lg-5" href="/">
-          <img class="navbar-brand-dark" src="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg" alt="Cloudbees logo" /> 
-          <img class="navbar-brand-light" src="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg" alt="Volt logo" />
-      </a>
-      <div class="d-flex align-items-center">
-          <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      </div>
+    <a class="navbar-brand me-lg-5" href="/">
+      <img class="navbar-brand-dark" src="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg"
+        alt="Cloudbees logo" />
+      <img class="navbar-brand-light" src="https://cdn.cloudbees.com/honeyui/logos/cloudbees-infinity-white.svg"
+        alt="Volt logo" />
+    </a>
+    <div class="d-flex align-items-center">
+      <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
   </nav>
 
-  {% include 'includes/sidebar.html' %} 
-    
+  {% include 'includes/sidebar.html' %}
+
   <main class="content">
 
-    {% include 'includes/navigation.html' %} 
+    {% include 'includes/navigation.html' %}
 
-    {% block content %}   {% endblock content %}
+    {% block content %} {% endblock content %}
 
     {% include 'includes/settings-box.html' %}
 
@@ -85,4 +92,5 @@
   {% include 'includes/scripts.html' %}
 
 </body>
+
 </html>
