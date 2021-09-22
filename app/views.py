@@ -17,14 +17,12 @@ from django.http import (HttpResponse,
 from django.core import serializers
 import pymongo
 from rox.server.rox_server import Rox
-import analytics
 
 from app.models.models import Orders
 from app.models.mongo_models import MongoOrders
 from app.utils import *
 from core.flags import Flags, ROLLOUT_ENV_KEY
 
-analytics.write_key = 'XvgumyHDSUHci6aCqdv96XbVNaKOhaJS'
 flags = Flags()
   # Setup Feature Management SDK
 try:
@@ -67,7 +65,7 @@ def pages(request):
     ### --- Feature FLAGS --- ###
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
-    context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
+    context['enableCustomersKPI'] = flags.enableCustomersKPI.get_value()
     context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
     context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
     context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
