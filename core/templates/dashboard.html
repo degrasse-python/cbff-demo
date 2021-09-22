@@ -84,7 +84,7 @@
                 
 
                 {{ LineGraphPlotly | safe }}
-                <span> {{ enableRevenueKPI }} </span>
+                <!-- span> {{ enableRevenueKPI }} </span -->
 
                   
             </div>
@@ -94,7 +94,8 @@
             <div class="card border-light shadow-sm">
                 <div class="card-body">
                     <!-- KPI Customers -->
-                    <div v-if="show_CustomersKPI" class="row d-block d-xl-flex align-items-center">
+                    {% if enableCustomersKPI %}
+                    <div class="row d-block d-xl-flex align-items-center">
                         <!-- kpi icon-->
                         <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                             <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span class="fas fa-chart-line"></span></div>
@@ -111,6 +112,7 @@
                             </div>
                         </div>
                     </div>
+                    {% else %}
                 </div>
             </div>
         </div>
@@ -118,7 +120,8 @@
             <div class="card border-light shadow-sm">
                 <div class="card-body">
                     <!-- KPI Revenue -->
-                    <div v-if="show_RevenueKPI" class="row d-block d-xl-flex align-items-center">
+                    {% if enableRevenueKPI %}
+                    <div class="row d-block d-xl-flex align-items-center">
                         <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                             <div class="icon icon-shape icon-md icon-shape-secondary rounded me-4"><span class="fas fa-cash-register"></span></div>
                         </div>
@@ -134,6 +137,7 @@
                             </div>
                         </div>
                     </div>
+                    {% else %}
                 </div>
             </div>
         </div>

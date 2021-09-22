@@ -67,7 +67,7 @@ def pages(request):
     ### --- Feature FLAGS --- ###
     ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
-    # context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
+    context['enableCustomersKPI'] = FLAGS.enableCustomersKPI.get_value()
     context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
     context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
     context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
