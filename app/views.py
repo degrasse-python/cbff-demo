@@ -24,7 +24,8 @@ from app.utils import *
 from core.flags import Flags, ROLLOUT_ENV_KEY
 
 flags = Flags()
-  # Setup Feature Management SDK
+# Setup Feature Management SDK
+
 try:
   flag_dict = {}
   # Register the flags container
@@ -47,7 +48,7 @@ def index(request):
 
 
 def pages(request):
-  
+  load_template = request.path.split('/')[-1]
   context = {}
   # All resource paths end in .html.
   # Pick out the html file name from the url and load that template.
@@ -61,18 +62,15 @@ def pages(request):
     #load_template = request.path.split('/')[-1]
     #context['segment'] = load_template
     context['segment'] = 'dashboard'
-    html_template = loader.get_template( 'dashboard.html' )
+    # html_template = loader.get_template( 'dashboard.html' )
+    html_template = loader.get_template(load_template)
     ### --- Feature FLAGS --- ###
-    ##Rox.fetch()
     # add ff inside context dict to pass them to the templates on frontend
     context['enableCustomersKPI'] = flags.enableCustomersKPI.get_value()
     context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
     context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
     context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
     # context['enableNewTaskButton'] = flags.enableNewTaskButton.get_value()
-    print("enableLineGraph: %s" % (context['enableLineGraph']))
-    print("enableRevenueKPI: %s" % (context['enableRevenueKPI']))
-    print("LineGraphVariant: %s" % (context['LineGraphVariant']))
     
     x_data, y_data  = lineplot(path="./app/data.csv")
     plot_div = plot([Scatter(x=x_data, y=y_data,
@@ -95,6 +93,53 @@ def pages(request):
     print('%s (%s)' % (e, type(e)))
     html_template = loader.get_template( 'page-500.html' )
   return HttpResponse(html_template.render(context, request))
+
+
+def dashboard(request):
+  context = {}
+  # All resource paths end in .html.
+  # Pick out the html file name from the url and load that template.
+  # flags = Flags()
+  try:
+    Rox.fetch()
+    print('fetched')
+  except Exception as e:
+    print('%s (%s)' % (e, type(e)))
+  try:
+    #load_template = request.path.split('/')[-1]
+    #context['segment'] = load_template
+    context['segment'] = 'dashboard'
+    html_template = loader.get_template( 'dashboard.html' )
+    ### --- Feature FLAGS --- ###
+    # add ff inside context dict to pass them to the templates on frontend
+    context['enableCustomersKPI'] = flags.enableCustomersKPI.get_value()
+    context['LineGraphVariant'] = flags.LineGraphVariant.get_value()
+    context['enableLineGraph'] = flags.enableLineGraph.is_enabled()
+    context['enableRevenueKPI'] = flags.enableRevenueKPI.is_enabled()
+    # context['enableNewTaskButton'] = flags.enableNewTaskButton.get_value()
+    
+    x_data, y_data  = lineplot(path="./app/data.csv")
+    plot_div = plot([Scatter(x=x_data, y=y_data,
+                        mode='lines', name='test',
+                        opacity=0.8, marker_color='green')],
+                        show_link=False, link_text="",
+                        output_type='div', include_plotlyjs=False,
+                        )
+
+    context['LineGraphPlotly'] = plot_div
+    print("plot_finished")
+    # html_template = loader.get_template( load_template )
+    return HttpResponse(html_template.render(context, request))
+        
+  except template.TemplateDoesNotExist:
+      html_template = loader.get_template( 'page-404.html' )
+      return HttpResponse(html_template.render(context, request))
+
+  except Exception as e:
+    print('%s (%s)' % (e, type(e)))
+    html_template = loader.get_template( 'page-500.html' )
+  return HttpResponse(html_template.render(context, request))
+
 
 
 def pivot_data(request):
